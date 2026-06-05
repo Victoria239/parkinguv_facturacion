@@ -48,3 +48,8 @@ def test_descuento_vip_se_aplica_antes_del_tope_diario():
     tarifa = calcular_tarifa(minutos=1440, vip=True)
 
     assert tarifa == 9600
+
+
+def test_no_permite_minutos_negativos():
+    with pytest.raises(ValueError):
+        calcular_tarifa(minutos=-1, vip=False)
