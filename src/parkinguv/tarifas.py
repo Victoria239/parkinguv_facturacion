@@ -8,6 +8,9 @@ DESCUENTO_VIP = 0.20
 
 
 def calcular_tarifa(minutos: int, vip: bool = False) -> int:
+    if minutos < 0:
+        raise ValueError("Los minutos no pueden ser negativos")
+
     if minutos <= MINUTOS_GRATIS:
         return 0
 
