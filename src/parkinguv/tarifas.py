@@ -8,20 +8,36 @@ DESCUENTO_VIP = 0.20
 
 
 def calcular_tarifa(minutos: int, vip: bool = False) -> int:
-    if minutos < 0:
-        raise ValueError("Los minutos no pueden ser negativos")
+    _validar_minutos(minutos)
 
     if minutos <= MINUTOS_GRATIS:
         return 0
 
-    minutos_cobrables = minutos - MINUTOS_GRATIS
-    horas_o_fraccion = math.ceil(minutos_cobrables / 60)
-    total = horas_o_fraccion * TARIFA_HORA_O_FRACCION
+    total = _calcular_total_sin_descuento(minutos)
 
     if vip:
-        total = total * (1 - DESCUENTO_VIP)
+        total = _aplicar_descuento_vip(total)
 
-    if total > TOPE_DIARIO:
-        total = TOPE_DIARIO
+    total = _aplicar_tope_diario(total)
 
     return int(total)
+
+
+def _validar_minutos(minutos: int) -> None:
+    if minutos < 0:
+        raise ValueError("Los minutos no pueden ser negativos")
+
+
+def _calcular_total_sin_descuento(minutos: int) -> int:
+    minutos_cobrables = minutos - MINUTOS_GRATIS
+    horas_o_fraccion = math.ceil(minutos_cobrables / 60)
+
+    return horas_o_fraccion * TARIFA_HORA_O_FRACCION
+
+
+def _aplicar_descuento_vip(total: float) -> float:
+    return total * (1 - DESCUENTO_VIP)
+
+
+def _aplicar_tope_diario(total: float) -> float:
+    return min(total, TOPE_DIARIO)
