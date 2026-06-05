@@ -36,3 +36,15 @@ def test_tarifa_no_supera_tope_diario():
     tarifa = calcular_tarifa(minutos=2000, vip=False)
 
     assert tarifa == 12000
+
+
+def test_cliente_vip_recibe_descuento_del_20_por_ciento():
+    tarifa = calcular_tarifa(minutos=91, vip=True)
+
+    assert tarifa == 800
+
+
+def test_descuento_vip_se_aplica_antes_del_tope_diario():
+    tarifa = calcular_tarifa(minutos=1440, vip=True)
+
+    assert tarifa == 9600
