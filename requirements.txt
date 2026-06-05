@@ -1,0 +1,8 @@
+﻿pytest
+behave
+fastapi
+uvicorn
+httpx
+locust
+bandit
+pydantic
