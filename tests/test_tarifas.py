@@ -24,3 +24,15 @@ def test_91_minutos_cobra_dos_horas_o_fraccion():
     tarifa = calcular_tarifa(minutos=91, vip=False)
 
     assert tarifa == 1000
+
+
+def test_tarifa_maxima_diaria_es_12000():
+    tarifa = calcular_tarifa(minutos=1440, vip=False)
+
+    assert tarifa == 12000
+
+
+def test_tarifa_no_supera_tope_diario():
+    tarifa = calcular_tarifa(minutos=2000, vip=False)
+
+    assert tarifa == 12000
